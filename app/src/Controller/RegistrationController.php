@@ -43,6 +43,7 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $user->setRoles(["ROLE_USER"]);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -58,11 +59,30 @@ class RegistrationController extends AbstractController
             );
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('app_register_pending', ['pending' => 1]);
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/verify", name="app_register_pending")
+     * @param Request $request
+     * @return Response
+     */
+    public function verifySend(Request $request): Response
+    {
+        $pending = $request->query->get('pending') == 1;
+        dump( $request->query->get('pending'));
+        if ($pending){
+            $this->addFlash('success', 'Please, verify your email...');
+        }else{
+            $this->addFlash('success', 'Your email address has been verified. Please, login now!');
+        }
+        return $this->render('security/verification_send.html.twig', [
+            'pending' => $pending,
         ]);
     }
 
@@ -84,8 +104,6 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        $this->addFlash('success', 'Your email address has been verified. Please, login now!');
-
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('app_register_pending', ['pending' => 0]);
     }
 }
