@@ -30,6 +30,7 @@ class UserFixtures extends Fixture
                 $user,
                 '111111'
             ));
+            $user->setIsVerified(true);
             $manager->persist($user);
         }
         for ($i = 0; $i < 1; $i++){
@@ -41,6 +42,7 @@ class UserFixtures extends Fixture
                 $user,
                 '111111'
             ));
+            $user->setIsVerified(true);
             $manager->persist($user);
         }
 
