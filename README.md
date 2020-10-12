@@ -1,0 +1,1 @@
+docker exec -it symfony_redis_1 sh
