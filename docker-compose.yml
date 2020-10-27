@@ -23,6 +23,10 @@ services:
             - storage
             - mailer
             - centrifugo
+        links:
+            - elasticsearch
+        environment:
+            - "ELASTICSEARCH_URL=elasticsearch:9209"
     php-cli:
         build:
             context: ./app/docker/development
@@ -37,6 +41,10 @@ services:
             - storage
             - mailer
             - centrifugo
+        links:
+            - elasticsearch
+        environment:
+            - "ELASTICSEARCH_URL=elasticsearch:9209"
     queue-worker:
         build:
             context: ./app/docker/development
@@ -73,6 +81,12 @@ services:
             POSTGRES_DB: app
         ports:
             - "54321:5432"
+    adminer:
+        depends_on:
+            - postgres
+        image: adminer
+        ports:
+            - "8089:8080"
     redis:
         image: redis:6.0.8-alpine
         volumes:
@@ -127,18 +141,23 @@ services:
         command: centrifugo --admin --admin_insecure
 
     elasticsearch:
-        image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+        image: docker.elastic.co/elasticsearch/elasticsearch:6.8.3
         environment:
-            - bootstrap.memory_lock=true
+            - "discovery.type=single-node"
+            - "bootstrap.memory_lock=true"
             - "ES_JAVA_OPTS=-Xms128m -Xmx128m"
-        ulimits:
-            memlock:
-                soft: -1
-                hard: -1
-        volumes:
-            - ./storage/docker/elasticsearch:/usr/share/elasticsearch/data
+            - "xpack.security.enabled=false"
+            - "http.cors.enabled=true"
+            - "http.cors.allow-origin=*"
         ports:
-            - "9201:9200"
+            - "9209:9200"
+
+    elasticsearch-head:
+        depends_on:
+            - elasticsearch
+        image: tobias74/elasticsearch-head:6
+        ports:
+            - "9109:9100"
 
     rabbitmq:
         image: rabbitmq:3.8.9-management
