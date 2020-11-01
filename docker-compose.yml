@@ -26,7 +26,7 @@ services:
         links:
             - elasticsearch
         environment:
-            PHP_IDE_CONFIG: serverName=API
+            PHP_IDE_CONFIG: serverName=xdebug
             ELASTICSEARCH_URL: "elasticsearch:9209"
     php-cli:
         build:
