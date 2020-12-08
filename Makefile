@@ -1,7 +1,7 @@
 up: docker-up
 down: docker-down
 restart: docker-down docker-up
-init: docker-down-clear clear docker-pull docker-build docker-up
+init: docker-down-clear clear docker-pull docker-build docker-up app-init
 test: test
 test-coverage: test-coverage
 test-unit: test-unit
