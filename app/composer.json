@@ -55,7 +55,8 @@
         "symfony/phpunit-bridge": "5.*",
         "symfony/stopwatch": "5.*",
         "symfony/var-dumper": "5.*",
-        "symfony/web-profiler-bundle": "5.*"
+        "symfony/web-profiler-bundle": "5.*",
+        "squizlabs/php_codesniffer": "3.*"
     },
     "config": {
         "optimize-autoloader": true,
@@ -93,7 +94,9 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "phpcs": "phpcs --standard=phpcs.xml",
+        "phpcbf": "phpcbf --standard=phpcs.xml"
     },
     "conflict": {
         "symfony/symfony": "*"

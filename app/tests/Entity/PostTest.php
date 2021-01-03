@@ -11,5 +11,4 @@ class PostTest extends TestCase
         $post = new Post();
         $this->assertSame(true);
     }
-
 }

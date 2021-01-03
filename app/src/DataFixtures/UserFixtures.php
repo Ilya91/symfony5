@@ -13,15 +13,15 @@ class UserFixtures extends Fixture
     private $passwordEncoder;
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
-     {
+    {
          $this->passwordEncoder = $passwordEncoder;
-     }
+    }
 
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create();
 
-        for ($i = 0; $i < 10; $i++){
+        for ($i = 0; $i < 10; $i++) {
             $user = new User();
             $user->setName($faker->userName);
             $user->setEmail($faker->email);
@@ -33,7 +33,7 @@ class UserFixtures extends Fixture
             $user->setIsVerified(true);
             $manager->persist($user);
         }
-        for ($i = 0; $i < 1; $i++){
+        for ($i = 0; $i < 1; $i++) {
             $user = new User();
             $user->setName("admin");
             $user->setEmail("admin@admin.com");

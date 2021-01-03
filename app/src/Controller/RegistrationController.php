@@ -50,7 +50,9 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
                     ->from(new Address('admin@admin.com', 'Project Support'))
                     ->to($user->getEmail())
@@ -75,10 +77,10 @@ class RegistrationController extends AbstractController
     public function verifySend(Request $request): Response
     {
         $pending = $request->query->get('pending') == 1;
-        dump( $request->query->get('pending'));
-        if ($pending){
+        dump($request->query->get('pending'));
+        if ($pending) {
             $this->addFlash('success', 'Please, verify your email...');
-        }else{
+        } else {
             $this->addFlash('success', 'Your email address has been verified. Please, login now!');
         }
         return $this->render('security/verification_send.html.twig', [
