@@ -66,3 +66,13 @@ test-unit:
 
 test-unit-coverage:
 	docker-compose run --rm php-cli php bin/phpunit --testsuite=unit --coverage-clover var/clover.xml --coverage-html var/coverage
+
+lint:
+	docker-compose run --rm php-cli composer lint
+	docker-compose run --rm php-cli composer phpcs
+
+analyze:
+	docker-compose run --rm php-cli composer psalm -- --no-diff
+
+analyze-diff:
+	docker-compose run --rm php-cli composer psalm
