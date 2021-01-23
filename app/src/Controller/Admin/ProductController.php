@@ -4,24 +4,22 @@ namespace App\Controller\Admin;
 
 use App\Entity\Category;
 use App\Entity\Product;
-use Carbon\Carbon;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
 {
-    /**
-     * @Route("/admin/product", name="admin_product")
-     */
-    public function index()
+    #[Route("/admin/product", name: "admin_product", methods: ["GET"])]
+    public function index(): Response
     {
         $product = new Product();
-        $product->setName('iPhone');
-        $product->setDescription('The best phone in the world.');
+        $product->setName( name: 'iPhone' );
+        $product->setDescription( description: 'The best phone in the world.' );
         $product->setPrice(1235.00);
-        $product->setCreatedAt(Carbon::now());
+
         $category = new Category();
-        $category->setName('Electronics');
+        $category->setName( name: 'Electronics' );
         $category->addProduct($product);
 
         $entityManager = $this->getDoctrine()->getManager();
