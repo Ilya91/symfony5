@@ -49,11 +49,17 @@ migrations:
 fixtures:
 	docker-compose run --rm php-cli php bin/console doctrine:fixtures:load --no-interaction
 
+routes:
+	docker-compose run --rm php-cli php bin/console debug:router
+
 ready:
 	docker run --rm -v ${PWD}/app:/app --workdir=/app alpine touch .ready
 
 assets-dev:
 	docker-compose run --rm node npm run dev
+
+assets-watch:
+	docker-compose run --rm node yarn encore dev --watch
 
 test:
 	docker-compose run --rm php-cli php bin/phpunit

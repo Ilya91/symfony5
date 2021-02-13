@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { render } from 'react-dom';
+
+class HelloMessage extends Component {
+    render() {
+        return (
+            <div>
+                Привет, {this.props.name}
+            </div>
+        );
+    }
+}
+
 render(
-    <h1>Hello, world!</h1>,
+    <HelloMessage name="Саша" />,
     document.getElementById('root')
 );
